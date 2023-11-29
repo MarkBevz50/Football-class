@@ -38,4 +38,8 @@ Player* createTeam(const std::string& teamName, size_t& teamSize);
 void printTeam(Player* team, size_t n);
 Player* maxPlayer(Player* team, size_t n);
 void sortTeam(Player* team, size_t n);
+void sortTeamBy(Player* team, size_t n, bool(*compare)(Player&, Player&));
 void writeTeam(Player* team, size_t n, const std::string& filename);
+bool byClub(Player& A, Player& B);
+bool byReward(Player& A, Player& B);
+Player* selectPlayers(Player* team, size_t n, size_t& newN);

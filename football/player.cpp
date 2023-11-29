@@ -146,6 +146,30 @@ void sortTeam(Player* team, size_t n)
 	}
 }
 
+void sortTeamBy(Player* team, size_t n, bool(*compare)(Player&, Player&))
+{
+	for (size_t i = 0; i < n; ++i)
+	{
+			size_t min = i;
+			for (size_t j = i + 1; j < n; ++j)
+			{
+				if (compare(team[j], team[min]))
+				{
+					min = j;
+				}
+			}
+
+
+
+			if (min != i)
+			{
+				Player temp = team[i];
+				team[i] = team[min];
+				team[min] = temp;
+			}
+	}
+}
+
 void writeTeam(Player* team, size_t n, const std::string& filename)
 {
 	ofstream fout(filename);
@@ -157,6 +181,33 @@ void writeTeam(Player* team, size_t n, const std::string& filename)
 		
 	}
 	fout.close();
+}
+
+bool byClub(Player& A, Player& B)
+{
+	return A.getClub() < B.getClub();
+}
+
+bool byReward(Player& A, Player& B)
+{
+	return A.getReward() < B.getReward();
+}
+
+Player* selectPlayers(Player* team, size_t n, size_t& newN)
+{
+	Player* selected = new Player[n];
+	for (size_t i = 0; i < n; ++i)
+	{
+
+		if (team[i].getGoals() < 35)
+		{
+			selected[newN] = team[i];
+			++newN;
+		}
+	}
+
+
+	return selected;
 }
 
 int Player::getReward() const
